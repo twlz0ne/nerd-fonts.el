@@ -55,6 +55,15 @@
   (let ((comp-func (if ido-mode 'ido-completing-read 'completing-read)))
     (funcall comp-func "pattern: " (nerd-fonts--construct-candidates) nil t)))
 
+(defmacro nerd-fonts--ivy-save-action (&rest body)
+  "Save the `ivy--actions-list'; execute BODY; resotre the `ivy--actions-list'."
+  (declare (indent defun) (debug t))
+  `(let* ((old-actions ivy--actions-list)
+          (inhibit-quit t))
+     (unwind-protect
+         (progn ,@body)
+       (setq ivy--actions-list old-actions))))
+
 ;;;###autoload
 (defun nerd-fonts (icon-name)
   "Return code point of ICON-NAME.
@@ -89,16 +98,16 @@ Or insert it into buffer while called interactivelly."
 (defun ivy-nerd-fonts ()
   (interactive)
   (require 'ivy)
-  (let ((ivy--actions-list nil))
-    (ivy-read "pattern> " (nerd-fonts--construct-candidates)
-              :action '(1
-                        ("i" (lambda (candidate)
-                               (insert (cdr candidate))) "insert")
-                        ("w" (lambda (candidate)
-                               (let ((icon (cdr candidate)))
-                                 (kill-new (format "%s" icon))
-                                 (message "Copied: %s" icon))) "copy")
-                        ))))
+  (nerd-fonts--ivy-save-action
+   (let* ((actions '(("i" (lambda (candidate)
+                           (insert (cdr candidate))) "insert")
+                     ("w" (lambda (candidate)
+                            (let ((icon (cdr candidate)))
+                              (kill-new (format "%s" icon))
+                              (message "Copied: %s" icon))) "copy")))
+          (ivy--actions-list (plist-put nil t `(,(car actions)))))
+     (ivy-read "pattern> " (nerd-fonts--construct-candidates)
+               :action `(1 ,@actions)))))
 
 (provide 'nerd-fonts)
 
