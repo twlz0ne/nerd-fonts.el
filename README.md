@@ -20,19 +20,22 @@ Clone this repository to `~/.emacs.d/site-lisp/nerd-fonts`. Add the following to
 
 ## Usage
 
-### `(nerd-fonts icon-name)`
+Return a icon by giving name:
 
-Return code point of `icon-name`, or insert it into buffer while called interactivelly.
+```elisp
+(nerd-fonts "mdi-lambda")
+;; => "ﬦ"
+```
 
-### `M-x helm-nerd-fonts`
-
-Insert & copy nerd-fonts icon with helm interface.
+Insert a icon at point in interactive way:
 
 <p float="left" align="center">
-  <img src="/helm-nerd-fonts_1.png" />
-  <img src="/helm-nerd-fonts_2.png" />
+  <img src="/images/ido-1.png" />
 </p>
 
-### `M-x ivy-nerd-fonts`
+More features with helm/ivy:
 
-Same as `helm-nerd-fonts` but with ivy interface.
+<p float="left" align="center">
+  <img src="/images/helm-1.png" />
+  <img src="/images/helm-2.png" />
+</p>

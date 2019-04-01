@@ -29,6 +29,9 @@
 ;;; Change Log:
 
 ;;  0.1.0  2019/03/16  Initial version.
+;;  0.1.1  2019/04/01  1. Integrate `{helm,ivy}-nerd-fonts` into `nerd-fonts`,
+;;                        provide only one interactive function.
+;;                     2. Add actions to insert/copy hex code for helm&ivy
 
 ;;; Code:
 
