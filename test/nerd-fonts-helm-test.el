@@ -22,8 +22,7 @@
 
 (defvar test-helm-nerd-fonts-insert nil)
 
-(defun helm-nerd-fonts@ad-override ()
-  (interactive)
+(defun nerd-fonts--helm-read@ad-override ()
   (require 'helm)
   (let ((helm--maybe-use-default-as-input t))
     (helm :sources
@@ -46,7 +45,7 @@
     "ﬦ"
     (with-temp-buffer
       (let ((test-helm-nerd-fonts-insert "mdi-lambda"))
-        (test-with '(call-interactively 'helm-nerd-fonts@ad-override 'any) "RET"))
+        (test-with '(funcall 'nerd-fonts--helm-read@ad-override) "RET"))
       (buffer-substring-no-properties (point-min) (point-max))))))
 
 (ert-deftest test-helm-nerd-fonts-insert ()
@@ -55,7 +54,7 @@
     "ﬦ"
     (with-temp-buffer
       (let ((test-helm-nerd-fonts-insert "mdi-lambda"))
-        (test-with '(call-interactively 'helm-nerd-fonts@ad-override 'any) "TAB RET"))
+        (test-with '(funcall 'nerd-fonts--helm-read@ad-override) "TAB RET"))
       (buffer-substring-no-properties (point-min) (point-max))))))
 
 (ert-deftest test-helm-nerd-fonts-copy ()
@@ -64,7 +63,7 @@
     "ﬦ"
     (with-temp-buffer
       (let ((test-helm-nerd-fonts-insert "mdi-lambda"))
-        (test-with '(call-interactively 'helm-nerd-fonts@ad-override 'any) "TAB C-n RET"))
+        (test-with '(funcall 'nerd-fonts--helm-read@ad-override) "TAB C-n RET"))
       (car kill-ring)))))
 
 ;;; nerd-fonts-helm-test.el ends here

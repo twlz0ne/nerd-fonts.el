@@ -25,7 +25,7 @@
    (equal
     "ﬦ"
     (with-temp-buffer
-      (test-with '(call-interactively 'ivy-nerd-fonts 'any) "mdi-lambda RET")
+      (test-with '(funcall 'nerd-fonts--ivy-read) "mdi-lambda RET")
       (buffer-substring-no-properties (point-min) (point-max)))))
   (unload-feature 'ivy))
 
@@ -34,7 +34,7 @@
    (equal
     "ﬦ"
     (with-temp-buffer
-      (test-with '(call-interactively 'ivy-nerd-fonts 'any) "mdi-lambda M-o i")
+      (test-with '(funcall 'nerd-fonts--ivy-read) "mdi-lambda M-o i")
       (buffer-substring-no-properties (point-min) (point-max)))))
   (unload-feature 'ivy))
 
@@ -43,7 +43,7 @@
    (equal
     "ﬦ"
     (with-temp-buffer
-      (test-with '(call-interactively 'ivy-nerd-fonts 'any) "mdi-lambda M-o w")
+      (test-with '(funcall 'nerd-fonts--ivy-read) "mdi-lambda M-o w")
       (car kill-ring))))
   (unload-feature 'ivy))
 

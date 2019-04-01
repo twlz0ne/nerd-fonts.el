@@ -52,8 +52,10 @@
           nerd-fonts-alist))
 
 (defun nerd-fonts--completing-read ()
-  (let ((comp-func (if ido-mode 'ido-completing-read 'completing-read)))
-    (funcall comp-func "pattern: " (nerd-fonts--construct-candidates) nil t)))
+  (let* ((comp-func (if ido-mode 'ido-completing-read 'completing-read))
+         (selection (funcall comp-func "pattern: "
+                            (nerd-fonts--construct-candidates) nil t)))
+    (insert (replace-regexp-in-string "\\`[^>]*> " "" selection))))
 
 (defmacro nerd-fonts--ivy-save-action (&rest body)
   "Save the `ivy--actions-list'; execute BODY; resotre the `ivy--actions-list'."
@@ -64,23 +66,7 @@
          (progn ,@body)
        (setq ivy--actions-list old-actions))))
 
-;;;###autoload
-(defun nerd-fonts (icon-name)
-  "Return code point of ICON-NAME.
-
-Or insert it into buffer while called interactivelly."
-  (interactive
-   (list (nerd-fonts--completing-read)))
-  (if (called-interactively-p 'any)
-      (insert (replace-regexp-in-string "\\`[^>]*> " "" icon-name))
-    (let ((reg (format "\\`\\(\\|.*\s\\)%s\\(\\|\s.*\\)\\'" icon-name)))
-      (assoc-default reg nerd-fonts-alist
-                     (lambda (str reg)
-                       (string-match-p reg str))))))
-
-;;;###autoload
-(defun helm-nerd-fonts ()
-  (interactive)
+(defun nerd-fonts--helm-read ()
   (require 'helm)
   (helm :sources
     (helm-build-sync-source "Nerd Fonts"
@@ -94,9 +80,7 @@ Or insert it into buffer while called interactivelly."
                         (message "Copied: %s" icon)))))
       :candidate-number-limit 9999)))
 
-;;;###autoload
-(defun ivy-nerd-fonts ()
-  (interactive)
+(defun nerd-fonts--ivy-read ()
   (require 'ivy)
   (nerd-fonts--ivy-save-action
    (let* ((actions '(("i" (lambda (candidate)
@@ -108,6 +92,22 @@ Or insert it into buffer while called interactivelly."
           (ivy--actions-list (plist-put nil t `(,(car actions)))))
      (ivy-read "pattern> " (nerd-fonts--construct-candidates)
                :action `(1 ,@actions)))))
+
+;;;###autoload
+(defun nerd-fonts (icon-name)
+  "Return code point of ICON-NAME.
+
+Or insert it into buffer while called interactivelly."
+  (interactive
+   (list
+    (cond ((and (featurep 'helm) helm-mode) (nerd-fonts--helm-read))
+          ((and (featurep 'ivy) ivy-mode) (nerd-fonts--ivy-read))
+          (t (nerd-fonts--completing-read)))))
+  (unless (called-interactively-p 'any)
+    (let ((reg (format "\\`\\(\\|.*\s\\)%s\\(\\|\s.*\\)\\'" icon-name)))
+      (assoc-default reg nerd-fonts-alist
+                     (lambda (str reg)
+                       (string-match-p reg str))))))
 
 (provide 'nerd-fonts)
 
