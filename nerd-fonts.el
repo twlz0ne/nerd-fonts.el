@@ -4,7 +4,9 @@
 
 ;; Author: Gong Qijian <gongqijian@gmail.com>
 ;; Created: 2019/03/16
-;; Version: 0.1.0
+;; Version: 0.2.0
+;; Last-Updated: 2022-06-28 10:55:09 +0800
+;;           By: Gong Qijian
 ;; Package-Requires: ((emacs "24.4"))
 ;; URL: https://github.com/twlz0ne/nerd-fonts.el
 ;; Keywords: utilities
@@ -25,13 +27,6 @@
 ;;; Commentary:
 
 ;; Provides nerd-fonts (https://github.com/ryanoasis/nerd-fontss) utilities.
-
-;;; Change Log:
-
-;;  0.1.0  2019/03/16  Initial version.
-;;  0.1.1  2019/04/01  1. Integrate `{helm,ivy}-nerd-fonts` into `nerd-fonts`,
-;;                        provide only one interactive function.
-;;                     2. Add actions to insert/copy hex code for helm&ivy
 
 ;;; Code:
 
