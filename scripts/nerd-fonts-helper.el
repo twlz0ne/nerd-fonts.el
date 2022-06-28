@@ -39,12 +39,14 @@
                                (funcall
                                 (lambda (it_)
                                   (when (string-match "\\`'\\([^']+\\)'[\t\s]+i_\\(.*\\)\\'" it_)
-                                    (cons (->> (match-string 2 it_)
-                                               (replace-regexp-in-string " i_" " ")
-                                               (replace-regexp-in-string "[\t\s]+\\'" "")
-                                               (replace-regexp-in-string "_" "-"))
-                                          (match-string 1 it_)))))))
+                                    (let ((icon (match-string 1 it_)))
+                                      (--map (cons it icon)
+                                             (->> (match-string 2 it_)
+                                                  (replace-regexp-in-string " i_" " ")
+                                                  (replace-regexp-in-string "_" "-")
+                                                  (split-string)))))))))
                          (--filter (and it it))
+                         (-flatten-n 1)
                          (-concat el-data))))))
         '("i_dev.sh" "i_fa.sh" "i_fae.sh" "i_iec.sh" "i_linux.sh" "i_material.sh"
           "i_oct.sh" "i_ple.sh" "i_pom.sh" "i_seti.sh" "i_weather.sh"
