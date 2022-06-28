@@ -53,6 +53,12 @@
     (insert ";; This file is generated automatically. DO NOT change it !!\n")
     (insert (format "(defconst nerd-fonts-alist '%S)" el-data))
     (insert "\n(provide 'nerd-fonts-data)")
-    (el-beautify (point-min) (point-max))
+    (pp-buffer)
+    ;; Fix indent
+    (goto-char (point-min))
+    (when (re-search-forward "^'((" nil t)
+      (replace-match (concat "  "(match-string 0))))
+    (while (re-search-forward "^(\"" nil t)
+      (replace-match (concat "    "(match-string 0))))
     (write-file (expand-file-name "../nerd-fonts-data.el"))
     ))

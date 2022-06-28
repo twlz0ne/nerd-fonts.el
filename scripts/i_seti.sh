@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Seti-UI + Custom (53 icons, 6 aliases)
 # Codepoints: E5FA-E62E
-# Nerd Fonts Version: 2.0.0
+# Nerd Fonts Version: 2.1.0
 # Script Version: 1.1.0
 test -n "$__i_seti_loaded" && return || __i_seti_loaded=1
 i='' i_custom_folder_npm=$i
@@ -63,4 +63,7 @@ i='' i_custom_vim=$i
 i='' i_custom_elm=$i
 i='' i_custom_elixir=$i
 i='' i_custom_electron=$i
+i='' i_custom_crystal=$i
+i='' i_custom_purescript=$i
+i='' i_custom_puppet=$i
 unset i
