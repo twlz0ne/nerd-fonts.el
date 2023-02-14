@@ -5,7 +5,7 @@
 ;; Author: Gong Qijian <gongqijian@gmail.com>
 ;; Created: 2019/03/16
 ;; Version: 0.2.0
-;; Last-Updated: 2022-06-28 10:55:09 +0800
+;; Last-Updated: 2023-02-14 14:49:00 +0800
 ;;           By: Gong Qijian
 ;; Package-Requires: ((emacs "24.4"))
 ;; URL: https://github.com/twlz0ne/nerd-fonts.el
@@ -32,15 +32,20 @@
 
 (require 'nerd-fonts-data)
 
+(defvar helm-mode)
 (declare-function helm "helm")
 (declare-function helm-build-sync-source "helm")
+(defvar ivy-mode)
+(defvar ivy--actions-list)
 (declare-function ivy-read "ivy")
 
 (defun nerd-fonts--propertize (glyph)
+  "Return a copy of GLYPH with text properties added."
   (propertize glyph
               'face '(:family "Hack Nerd Font" :height 1.5)))
 
 (defun nerd-fonts--construct-candidates ()
+  "Return a list of (STRING . GLYPH)."
   (mapcar (lambda (nerd-fonts)
             (cons (concat (car nerd-fonts)
                           " -> "
@@ -50,6 +55,7 @@
           nerd-fonts-alist))
 
 (defun nerd-fonts--completing-read ()
+  "Completing read nerd fonts."
   (let* ((comp-func (if ido-mode 'ido-completing-read 'completing-read))
          (selection (funcall comp-func "pattern: "
                             (nerd-fonts--construct-candidates) nil t)))
@@ -65,6 +71,7 @@
        (setq ivy--actions-list old-actions))))
 
 (defun nerd-fonts-hexcode (icon)
+  "Return hexcode from ICON."
   (format "\\x%x" (string-to-char icon)))
 
 (defvar nerd-fonts--menu-actions
@@ -83,9 +90,11 @@
            (let ((hexcode (nerd-fonts-hexcode (if (listp candidate) (cdr candidate) candidate))))
              (kill-new (format "%s" hexcode))
              (message "Copied: %s" hexcode)))
-     "Copy hex-code")))
+     "Copy hex-code"))
+  "Menu actions for completing read.")
 
 (defun nerd-fonts--helm-read ()
+  "Invoke helm read."
   (require 'helm)
   (helm :sources
     (helm-build-sync-source "Nerd Fonts"
@@ -97,6 +106,7 @@
       :candidate-number-limit 9999)))
 
 (defun nerd-fonts--ivy-read ()
+  "Invoke ivy read."
   (require 'ivy)
   (nerd-fonts--ivy-save-action
    (let* ((actions nerd-fonts--menu-actions)
