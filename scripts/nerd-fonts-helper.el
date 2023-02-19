@@ -12,7 +12,7 @@
            (message "==> %s downloaded" it)
            (write-file it)
            ))))
- '("i_cod.sh" "i_dev.sh" "i_fa.sh" "i_fae.sh" "i_iec.sh" "i_logos.sh"
+ '("i_cod.sh" "i_dev.sh" "i_fa.sh" "i_fae.sh" "i_iec.sh" "i_logos.sh" "i_md.sh"
    "i_material.sh" "i_oct.sh" "i_ple.sh" "i_pom.sh" "i_seti.sh" "i_weather.sh"))
 
 ;; generate el data
@@ -47,7 +47,7 @@
                          (--filter (and it it))
                          (-flatten-n 1)
                          (-concat el-data))))))
-        '("i_cod.sh" "i_dev.sh" "i_fa.sh" "i_fae.sh" "i_iec.sh" "i_logos.sh"
+        '("i_cod.sh" "i_dev.sh" "i_fa.sh" "i_fae.sh" "i_iec.sh" "i_logos.sh" "i_md.sh"
           "i_material.sh" "i_oct.sh" "i_ple.sh" "i_pom.sh" "i_seti.sh" "i_weather.sh"))
   (with-temp-buffer
     (insert ";; This file is generated automatically. DO NOT change it !!\n")
