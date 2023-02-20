@@ -24,7 +24,7 @@
 
 (defun nerd-fonts--helm-read@ad-override ()
   (require 'helm)
-  (let ((helm--maybe-use-default-as-input t))
+  (let ((helm-maybe-use-default-as-input t))
     (helm :sources
       (helm-build-sync-source "Nerd Fonts"
         :candidates (nerd-fonts--construct-candidates)

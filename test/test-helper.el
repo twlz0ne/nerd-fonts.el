@@ -7,6 +7,8 @@
   (setq package-user-dir (expand-file-name (format "./.cask/%s.%s/elpa/" (car ver-list) (car (cdr ver-list)))))
   (package-initialize))
 
+;; Following `test-*' are copied from https://github.com/abo-abo/swiper/ivy-test.el
+;; [[
 (defvar test-expr nil
   "Holds a test expression to evaluate with `test-eval'.")
 
@@ -31,6 +33,7 @@
      (vconcat (kbd "C-c C-c e")
               (kbd keys)))
     test-result))
+;; ]]
 
 ;; @FIX-ERROR After 0 kbd macro iterations: Symbol’s function definition is void: ert--print-backtrace
 ;; @COPY-FROM .cask/${emacs_version}/elpa/ert-runner-20180831.1145/ert-compat.el
@@ -43,22 +46,22 @@
         (print-level 8)
         (print-length 50))
     (dolist (frame backtrace)
-      (ecase (first frame)
+      (cl-ecase (first frame)
         ((nil)
          ;; Special operator.
-         (destructuring-bind (special-operator &rest arg-forms)
+         (cl-destructuring-bind (special-operator &rest arg-forms)
              (cdr frame)
            (insert
             (format "  %S\n" (list* special-operator arg-forms)))))
         ((t)
          ;; Function call.
-         (destructuring-bind (fn &rest args) (cdr frame)
+         (cl-destructuring-bind (fn &rest args) (cdr frame)
            (insert (format "  %S(" fn))
-           (loop for firstp = t then nil
-                 for arg in args do
-                 (unless firstp
-                   (insert " "))
-                 (insert (format "%S" arg)))
+           (cl-loop for firstp = t then nil
+                    for arg in args do
+                      (unless firstp
+                        (insert " "))
+                    (insert (format "%S" arg)))
            (insert ")\n")))))))
 
 ;;; test-helper.el ends here
