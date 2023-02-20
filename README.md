@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/twlz0ne/nerd-fonts.el.svg?branch=master)](https://travis-ci.com/twlz0ne/nerd-fonts.el)
+[![CI](https://github.com/twlz0ne/nerd-fonts.el/workflows/CI/badge.svg)](https://github.com/twlz0ne/nerd-fonts.el/actions?query=workflow%3ACI)
 
 # nerd-fonts.el
 
